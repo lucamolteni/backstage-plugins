@@ -27,4 +27,22 @@ describe('createRouter', () => {
       expect(response.body).toEqual({ status: 'ok' });
     });
   });
+
+  describe('GET /job', () => {
+    it('returns ok', async () => {
+      const response = await request(app).get('/job');
+
+      expect(response.status).toEqual(200);
+      // expect(response.body).toEqual({ status: 'ok' });
+    });
+  });
+
+  describe('GET /job/2/data', () => {
+    it('returns ok', async () => {
+      const response = await request(app).get('/job/2/data');
+
+      expect(response.status).toEqual(200);
+      // expect(response.body).toEqual({ status: 'ok' });
+    });
+  });
 });
