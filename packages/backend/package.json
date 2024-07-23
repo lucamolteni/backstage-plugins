@@ -36,7 +36,6 @@
     "@backstage/backend-dynamic-feature-service": "^0.2.9",
     "@backstage/cli-node": "^0.2.5",
     "@janus-idp/backstage-plugin-rbac-backend": "*",
-    "@janus-idp/backstage-plugin-rules-backend": "*",
     "app": "*"
   },
   "devDependencies": {

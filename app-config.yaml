@@ -48,6 +48,18 @@ proxy:
     changeOrigin: true
     # Change to "false" in case of using self hosted quay instance with a self-signed certificate
     secure: true
+  '/ingestor/api':
+    target: 'http://localhost:8082'
+    headers:
+      X-Requested-With: 'XMLHttpRequest'
+    changeOrigin: true
+    secure: false
+  '/processor/api':
+    target: 'http://localhost:8080'
+    headers:
+      X-Requested-With: 'XMLHttpRequest'
+    changeOrigin: true
+    secure: false
 
 quay:
   uiUrl: 'https://quay.io'

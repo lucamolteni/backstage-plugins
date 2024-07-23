@@ -1,4 +1,5 @@
 import {
+  configApiRef,
   createApiFactory,
   createPlugin,
   createRoutableExtension,
@@ -16,9 +17,10 @@ export const rulesPlugin = createPlugin({
       api: scoreCardApiRef,
       deps: {
         discoveryApi: discoveryApiRef,
+        configApi: configApiRef,
       },
-      factory: ({ discoveryApi }) =>
-        new ScoreCardBackendClient({ discoveryApi }),
+      factory: ({ discoveryApi , configApi}) =>
+        new ScoreCardBackendClient({ discoveryApi, configApi }),
     }),
   ],
   routes: {
