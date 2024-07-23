@@ -1,4 +1,4 @@
-import { DiscoveryApi } from '@backstage/core-plugin-api';
+import {ConfigApi, DiscoveryApi} from '@backstage/core-plugin-api';
 
 import { data } from 'msw';
 
@@ -6,9 +6,14 @@ import { ScoreCardApi } from './api';
 import { Job, RawData, RawDataDetail, ScoreCard } from './types';
 
 export class ScoreCardBackendClient implements ScoreCardApi {
+  private readonly configApi: ConfigApi;
+
+  static readonly DEFAULT_PROXY_PATH = '/scorecards/api';
+
   private readonly discoveryApi: DiscoveryApi;
-  constructor(options: { discoveryApi: DiscoveryApi }) {
+  constructor(options: { discoveryApi: DiscoveryApi, configApi: ConfigApi}) {
     this.discoveryApi = options.discoveryApi;
+    this.configApi = options.configApi;
   }
   private async handleResponse(response: Response): Promise<any> {
     if (!response.ok) {
@@ -22,6 +27,11 @@ export class ScoreCardBackendClient implements ScoreCardApi {
       method: 'GET',
     });
     return await this.handleResponse(response);
+  }
+
+  private async getBaseUrl() {
+    const proxyPath = ScoreCardBackendClient.DEFAULT_PROXY_PATH;
+    return `${await this.discoveryApi.getBaseUrl('proxy')}${proxyPath}`;
   }
 
   async listScoreCards(): Promise<{ results: ScoreCard[] }> {
@@ -55,7 +65,7 @@ export class ScoreCardBackendClient implements ScoreCardApi {
     jobId: number,
     rawDataId: number,
   ): Promise<{ results: RawDataDetail }> {
-    const url = `${await this.discoveryApi.getBaseUrl('rules')}/job/${jobId}/data/${rawDataId}`;
+    const url = `${(await this.getBaseUrl())}/job/${jobId}/data/${rawDataId}`;
     const response = await fetch(url, {
       method: 'GET',
     });
