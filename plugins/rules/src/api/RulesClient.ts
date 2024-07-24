@@ -44,7 +44,7 @@ export class ScoreCardBackendClient implements ScoreCardApi {
   }
 
   async getJobs(): Promise<{ results: Job[] }> {
-    const url = `${await this.discoveryApi.getBaseUrl('rules')}/job`;
+    const url = `${await this.getBaseUrl()}/job`;
     const response = await fetch(url, {
       method: 'GET',
     });
@@ -53,7 +53,7 @@ export class ScoreCardBackendClient implements ScoreCardApi {
   }
 
   async getRawData(jobId: number): Promise<{ results: RawData[] }> {
-    const url = `${await this.discoveryApi.getBaseUrl('rules')}/job/${jobId}/data`;
+    const url = `${await this.getBaseUrl()}/job/${jobId}/data`;
     const response = await fetch(url, {
       method: 'GET',
     });
