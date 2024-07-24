@@ -22,13 +22,6 @@ export class ScoreCardBackendClient implements ScoreCardApi {
     }
     return await response.json();
   }
-  async getHealth(): Promise<{ status: string }> {
-    const url = `${await this.discoveryApi.getBaseUrl('rules')}/health`;
-    const response = await fetch(url, {
-      method: 'GET',
-    });
-    return await this.handleResponse(response);
-  }
 
   private async getBaseUrl(proxyPath: String) {
     return `${await this.discoveryApi.getBaseUrl('proxy')}${proxyPath}`;

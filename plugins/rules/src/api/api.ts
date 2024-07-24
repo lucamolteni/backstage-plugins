@@ -3,8 +3,6 @@ import { createApiRef } from '@backstage/core-plugin-api';
 import { Job, RawData, RawDataDetail, ScoreCard } from './types';
 
 export interface ScoreCardApi {
-  getHealth(): Promise<{ status: string }>;
-
   listScoreCards(): Promise<{ results: ScoreCard[] }>;
 
   getJobs(): Promise<{ results: Job[] }>;
