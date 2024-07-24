@@ -1,9 +1,9 @@
 import {ConfigApi, DiscoveryApi} from '@backstage/core-plugin-api';
 
-import { data } from 'msw';
+import {data} from 'msw';
 
-import { ScoreCardApi } from './api';
-import { Job, RawData, RawDataDetail, ScoreCard } from './types';
+import {ScoreCardApi} from './api';
+import {Job, RawData, RawDataDetail, ScoreCard} from './types';
 
 export class ScoreCardBackendClient implements ScoreCardApi {
   private readonly configApi: ConfigApi;
@@ -86,15 +86,14 @@ export class ScoreCardBackendClient implements ScoreCardApi {
   }
 
   async deleteJob(jobId: number): Promise<Response> {
-    const url = `${await this.discoveryApi.getBaseUrl('rules')}/job/${jobId}`;
-    const response: Response = await fetch(url, {
+    const url = `${await this.getBaseUrl()}/job/${jobId}`;
+    return await fetch(url, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(data),
     });
-    return response;
   }
 
   async createJob(
