@@ -74,7 +74,7 @@ export class ScoreCardBackendClient implements ScoreCardApi {
   }
 
   async testJob(jobId: number): Promise<Response> {
-    const url = `${await this.discoveryApi.getBaseUrl('rules')}/job/${jobId}/test`;
+    const url = `${await this.getBaseUrl()}/job/${jobId}/test`;
     const response: Response = await fetch(url, {
       method: 'POST',
       headers: {
@@ -102,8 +102,8 @@ export class ScoreCardBackendClient implements ScoreCardApi {
     type: string,
     endpoint: string,
   ): Promise<Response> {
-    const url = `${await this.discoveryApi.getBaseUrl('rules')}/job`;
-    const data = {
+    const url = `${await this.getBaseUrl()}/job`;
+    const createJobRequest = {
       cron: cron,
       type: type,
       endpoint: endpoint,
@@ -113,7 +113,7 @@ export class ScoreCardBackendClient implements ScoreCardApi {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(createJobRequest),
     });
   }
 }
